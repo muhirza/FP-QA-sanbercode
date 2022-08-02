@@ -8,6 +8,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.action_chains import ActionChains
 from random_username.generate import generate_username
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.select import Select
 
 
 class TestOrange(unittest.TestCase): 
@@ -288,7 +289,7 @@ class TestOrange(unittest.TestCase):
         tombol_ll = browser.find_element(By.ID,"menu_leave_viewLeaveList")
         ActionChains(browser).move_to_element(leave_tombol).click(tombol_ll).perform()
         time.sleep(3)
-        #TC11
+        #TC13
         cal1 =browser.find_element(By.ID,"calFromDate")
         cal2 = browser.find_element(By.ID,"calToDate")
         cal1.clear()
@@ -320,31 +321,28 @@ class TestOrange(unittest.TestCase):
         tombol_assign = browser.find_element(By.ID,"menu_leave_assignLeave")
         ActionChains(browser).move_to_element(leave_tombol).click(tombol_assign).perform()
         time.sleep(3)
-        #TC11
-        cal1 =browser.find_element(By.ID,"calFromDate")
-        cal2 = browser.find_element(By.ID,"calToDate")
+        #TC14
+        browser.find_element(By.ID,"assignleave_txtEmployee_empName").send_keys("Peter Mac Anderson")
+        sel = Select(browser.find_element(By.ID,"assignleave_txtLeaveType"))
+        sel.select_by_visible_text("CAN - Bereavement")
+        
+        cal1 =browser.find_element(By.ID,"assignleave_txtFromDate")
+        cal2 = browser.find_element(By.ID,"assignleave_txtToDate")
         cal1.clear()
-        cal1.send_keys("2020-01-01") 
+        cal1.send_keys("01-08-2022") 
         time.sleep(1)
         cal2.clear()
-        cal2.send_keys("2022-01-01")
+        cal2.send_keys("02-08-2022")
         cal2.send_keys(Keys.RETURN) 
-        time.sleep(5)
+        time.sleep(2)
+        browser.find_element(By.ID,"assignBtn").click()
+        time.sleep(3)
+        browser.find_element(By.ID,"confirmOkButton").click()
+        time.sleep(3)
         
-        browser.find_element(By.ID,"leaveList_chkSearchFilter_checkboxgroup_allcheck").click()
-        time.sleep(1)
-        browser.find_element(By.ID,"btnSearch").click()
-        time.sleep(5)
-            
-        # #TC12
-        # ActionChains(browser).move_to_element(pim_tombol).click(tombol_employee).perform()
-        # time.sleep(3)
-        # browser.find_element(By.ID,"empsearch_employee_name_empName").send_keys(fName)
-        # time.sleep(2)
-        # browser.find_element(By.ID,"searchBtn").click()
-        # time.sleep(5)
-        # response_data = browser.find_element(By.XPATH,"/html/body/div[1]/div[3]/div[2]/div/form/div[4]/table/tbody/tr/td[4]/a").text
-        # self.assertIn(fName,response_data)
+        # #TC14
+        
+        
     
     
 
